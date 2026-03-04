@@ -6,6 +6,45 @@ def coletar_valores(mensagem, valores_possiveis):
         else:
             print('Valor digitado inválido!')
 
+def calcular_quantidade_elevador(lista, elevador):
+    quant = 0
+    for item in lista:
+        if item[0] == elevador:
+            quant += 1
+    
+    return quant
+
+def verificar_elevador_mais_utilizado(lista):
+    quantElevadorA = calcular_quantidade_elevador(lista, 'A');
+    quantElevadorB = calcular_quantidade_elevador(lista, 'B');
+    quantElevadorC = calcular_quantidade_elevador(lista, 'C');
+    if (quantElevadorA >= quantElevadorB) and (quantElevadorA >= quantElevadorC):
+        return 'A'
+    elif (quantElevadorB >= quantElevadorA) and (quantElevadorB >= quantElevadorC):
+      return 'B'
+    elif (quantElevadorC >= quantElevadorA) and (quantElevadorC >= quantElevadorB):
+       return 'C'
+
+def calcular_quantidade_turno(lista, elevador, turno):
+    quant = 0
+    for item in lista:
+        if ((item[0] == elevador) or (elevador == None)) and (item[1] == turno):
+            quant += 1
+        
+    return quant
+        
+def verificar_turno_mais_utilizado(lista, elevador):
+    quantMatutino = calcular_quantidade_turno(lista, elevador, 'M');
+    quantVespertino = calcular_quantidade_turno(lista, elevador, 'V');
+    quantNoturno = calcular_quantidade_turno(lista, elevador, 'N');
+    
+    if (quantMatutino >= quantVespertino) and (quantMatutino >= quantNoturno):
+        return 'M'
+    elif (quantVespertino >= quantMatutino) and (quantVespertino >= quantNoturno):
+        return 'V'
+    elif (quantNoturno >= quantMatutino) and (quantNoturno >= quantVespertino):
+        return 'N'
+
 lista = []
 
 while True:
@@ -19,49 +58,13 @@ while True:
         break
 
 
-quantElevadorA = 0;
-quantPeriodoMElevadorA = 0
-quantPeriodoVElevadorA = 0
-quantPeriodoNElevadorA = 0
+elevador_mais_utilizado = verificar_elevador_mais_utilizado(lista);
+print('Elevador mais utilizado é o ' + elevador_mais_utilizado)
+turno_mais_utilizado_elevador = verificar_turno_mais_utilizado(lista, elevador_mais_utilizado);
+print('O turno mais utilizado do elevador ' + elevador_mais_utilizado + ' é o ' + turno_mais_utilizado_elevador)
 
-quantElevadorB = 0;
-quantPeriodoMElevadorB = 0
-quantPeriodoVElevadorB = 0
-quantPeriodoNElevadorB = 0
-
-quantElevadorC = 0;
-quantPeriodoMElevadorC = 0
-quantPeriodoVElevadorC = 0
-quantPeriodoNElevadorC = 0
-
-for item in lista:
-    if item[0] =='A':
-        quantElevadorA += 1
-        if item[1] == 'M':
-            quantPeriodoMElevadorA += 1
-        if item[1] == 'V':
-            quantPeriodoVElevadorA += 1
-        if item[1] == 'N':
-            quantPeriodoNElevadorA += 1
-    if item[0] =='B':
-        quantElevadorB += 1
-    if item[0] =='C':
-        quantElevadorC += 1
+periodo_mais_utilizado = verificar_turno_mais_utilizado(lista, None)
+print('Turno mais utilizado: ' + periodo_mais_utilizado)
 
 
-if (quantElevadorA >= quantElevadorB) and (quantElevadorA >= quantElevadorC):
-    print('Elevador mais utilizado é o A')
-    if (quantPeriodoMElevadorA >= quantPeriodoVElevadorA) and (quantPeriodoMElevadorA >= quantPeriodoNElevadorA):
-        print('O período mais utilizado do elevador A é Matutino')
-    elif (quantPeriodoVElevadorA >= quantPeriodoMElevadorA) and (quantPeriodoVElevadorA >= quantPeriodoNElevadorA):
-        print('O período mais utilizado do elevador A é Vespertino')
-    elif (quantPeriodoNElevadorA >= quantPeriodoVElevadorA) and (quantPeriodoNElevadorA >= quantPeriodoMElevadorA):
-        print('O período mais utilizado do elevador A é Noturno')
-elif (quantElevadorB >= quantElevadorA) and (quantElevadorB >= quantElevadorC):
-    print('Elevador mais utilizado é o B')
-elif (quantElevadorC >= quantElevadorA) and (quantElevadorC >= quantElevadorB):
-    print('Elevador mais utilizado é o C')
 
-print('A: ',quantElevadorA)
-print('B: ',quantElevadorB)
-print('C: ',quantElevadorC)
